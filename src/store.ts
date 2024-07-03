@@ -1,6 +1,13 @@
 import { create } from 'zustand'
 import axios from 'axios';
 import { CryptoCurrenciesResponseSchema } from './Schema/crypto-schema';
+import { crypto } from './Types';
+
+type useCryptoStoreType =  { 
+    cryptocurrenciesState : crypto[]
+    fetchCryptos: () => Promise<void>
+}
+
 
 async function getCryptos() {
     const url = 'https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=20&tsym=USD';
@@ -9,15 +16,26 @@ async function getCryptos() {
         
         const {data : { Data }} = await axios( url )
         const resultado = CryptoCurrenciesResponseSchema.safeParse( Data)
-        console.log( resultado )
+        
+        if( resultado.success) { 
+            return resultado.data
+        }
 
     } catch (error) {
         console.log( error )
     }
 }
 
-export const useCryptoStore = create(() => ({ 
-    fetchCryptos : () => { 
-        getCryptos()
+export const useCryptoStore = create<useCryptoStoreType>(( set ) => ({ 
+
+    cryptocurrenciesState : [] ,
+
+    fetchCryptos : async () => { 
+        const cryptocurrencies =  await getCryptos()
+
+        set (() => ({
+            cryptocurrenciesState : cryptocurrencies
+        }))
+        
     }
 }))

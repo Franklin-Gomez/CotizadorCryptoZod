@@ -7,9 +7,9 @@ function App() {
   const fetchCyptos = useCryptoStore( store => store.fetchCryptos )
 
   // inicia la app y llamamos la funcion
-  useEffect(() =>
+  useEffect(() => {
     fetchCyptos()
-  ,[])
+  }, [])
 
   return (
     <>
