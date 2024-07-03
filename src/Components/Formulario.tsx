@@ -1,3 +1,5 @@
+import { currencies } from "../db/db"
+
 export default function Formulario() {
     return (
         <form
@@ -12,6 +14,14 @@ export default function Formulario() {
                 >
 
                     <option value=""> --Seleccione La Moneda -- </option>
+                    { currencies.map((currency) =>(
+
+                        <option 
+                        value={currency.code}
+                        key={currency.code}
+                        > {currency.name} </option>
+
+                    ))}
                 </select>
 
             </div>
