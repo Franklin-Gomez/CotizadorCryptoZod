@@ -17,9 +17,10 @@ export default function Formulario() {
                     { currencies.map((currency) =>(
 
                         <option 
-                        value={currency.code}
-                        key={currency.code}
-                        > {currency.name} </option>
+                            value={currency.code}
+                            key={currency.code} 
+                        > 
+                        {currency.name} </option>
 
                     ))}
                 </select>

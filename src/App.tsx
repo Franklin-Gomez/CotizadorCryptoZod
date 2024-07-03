@@ -1,7 +1,16 @@
+import { useEffect } from "react"
 import Formulario from "./Components/Formulario"
-
+import { useCryptoStore } from "./store"
 
 function App() {
+
+  const fetchCyptos = useCryptoStore( store => store.fetchCryptos )
+
+  // inicia la app y llamamos la funcion
+  useEffect(() =>
+    fetchCyptos()
+  ,[])
+
   return (
     <>
       <div className="container">
