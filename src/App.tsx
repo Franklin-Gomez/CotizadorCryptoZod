@@ -1,3 +1,4 @@
+import Formulario from "./Components/Formulario"
 
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
         </h1>
 
         <div className="content">
-
+          <Formulario/>
         </div>
       </div>
     </>
