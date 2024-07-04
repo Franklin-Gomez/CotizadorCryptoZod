@@ -1,6 +1,10 @@
 import { currencies } from "../db/db"
+import { useCryptoStore } from "../store"
 
 export default function Formulario() {
+
+    const cryptos = useCryptoStore( store => store.cryptocurrenciesState)
+
     return (
         <form
             className="form"
@@ -19,8 +23,7 @@ export default function Formulario() {
                         <option 
                             value={currency.code}
                             key={currency.code} 
-                        > 
-                        {currency.name} </option>
+                        >  {currency.name} </option>
 
                     ))}
                 </select>
@@ -36,6 +39,13 @@ export default function Formulario() {
                 >
 
                     <option value=""> --Seleccione La Crypto -- </option>
+                    { cryptos.map( (crypto) => (
+                        <option 
+                            value={crypto.CoinInfo.Name}
+                            key={crypto.CoinInfo.FullName}
+                        
+                        > {crypto.CoinInfo.FullName}</option>
+                    ))}
                 </select>
 
             </div>

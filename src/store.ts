@@ -14,16 +14,15 @@ export const useCryptoStore = create<useCryptoStoreType>()(
     devtools(
         ( set ) => ({ 
 
-        cryptocurrenciesState : [] ,
+            cryptocurrenciesState : [] ,
 
-        fetchCryptos : async () => { 
-            const cryptocurrencies =  await getCryptos()
+            fetchCryptos : async () => { 
+                const cryptocurrencies =  await getCryptos()
 
-            set (() => ({
-                cryptocurrenciesState : cryptocurrencies
-            }))
-            
-        }
-        }),
+                set (() => ({
+                    cryptocurrenciesState : cryptocurrencies
+                }))
+            }
+        })
     )
 )
