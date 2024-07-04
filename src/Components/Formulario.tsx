@@ -1,9 +1,23 @@
+import { useState } from "react"
 import { currencies } from "../db/db"
 import { useCryptoStore } from "../store"
+import { pair } from "../Types"
 
 export default function Formulario() {
 
     const cryptos = useCryptoStore( store => store.cryptocurrenciesState)
+
+    const [ pair , setPair ] = useState<pair> ({
+        currency : '',
+        criptocurrency : ''
+    })
+    
+    const handleChange = ( e : React.ChangeEvent<HTMLSelectElement> ) => { 
+        setPair({
+            ...pair,
+            [e.target.name] : e.target.value
+        })
+    }
 
     return (
         <form
@@ -15,6 +29,7 @@ export default function Formulario() {
                 <select 
                     name="currency" 
                     id="currency"
+                    onChange={ handleChange }
                 >
 
                     <option value=""> --Seleccione La Moneda -- </option>
@@ -36,6 +51,7 @@ export default function Formulario() {
                 <select 
                     name="criptocurrency" 
                     id="criptocurrency"
+                    onChange={ handleChange }
                 >
 
                     <option value=""> --Seleccione La Crypto -- </option>
