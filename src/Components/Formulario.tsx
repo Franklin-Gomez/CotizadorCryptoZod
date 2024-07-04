@@ -2,6 +2,7 @@ import { useState } from "react"
 import { currencies } from "../db/db"
 import { useCryptoStore } from "../store"
 import { pair } from "../Types"
+import Alert from "./Alert"
 
 export default function Formulario() {
 
@@ -12,6 +13,8 @@ export default function Formulario() {
         criptocurrency : ''
     })
     
+    const [ error , setError ] = useState('')
+
     const handleChange = ( e : React.ChangeEvent<HTMLSelectElement> ) => { 
         setPair({
             ...pair,
@@ -19,10 +22,25 @@ export default function Formulario() {
         })
     }
 
+    const handleSubmit = ( e  : React.FormEvent<HTMLFormElement> ) => { 
+        e.preventDefault()
+
+        if ( Object.values(pair).includes('') ){ 
+            setError('papi rellena esa monda')
+            return;
+        }
+
+        setError('')
+    }
+
     return (
         <form
             className="form"
+            onSubmit={ handleSubmit  }
         >
+
+            { error  && <Alert>{ error }</Alert>}
+
             <div className="field">
                 <label htmlFor="currency">Moneda : </label>
                 
@@ -30,6 +48,7 @@ export default function Formulario() {
                     name="currency" 
                     id="currency"
                     onChange={ handleChange }
+                    value={pair.currency}
                 >
 
                     <option value=""> --Seleccione La Moneda -- </option>
@@ -52,6 +71,7 @@ export default function Formulario() {
                     name="criptocurrency" 
                     id="criptocurrency"
                     onChange={ handleChange }
+                    value={pair.criptocurrency}
                 >
 
                     <option value=""> --Seleccione La Crypto -- </option>
