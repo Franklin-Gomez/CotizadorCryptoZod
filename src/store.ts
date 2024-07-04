@@ -2,10 +2,12 @@ import { create } from 'zustand'
 import { crypto, CryptoPrice, pair } from './Types';
 import { devtools } from 'zustand/middleware';
 import { getCryptos , fetchCurrentCryptoPrice } from './Service/CryptoService';
+import Spinner from './Components/Spinner';
 
 type useCryptoStoreType =  { 
     cryptocurrenciesState : crypto[]
     result : CryptoPrice
+    loading : boolean
     fetchCryptos: () => Promise<void>
     fetchData: ( pair : pair) => Promise<void>
 }
@@ -27,6 +29,8 @@ export const useCryptoStore = create<useCryptoStoreType>()(
                 LASTUPDATE : ''
             },  // o {} as CryptoPrice
 
+            loading : false ,
+
             fetchCryptos : async () => { 
                 const cryptocurrencies =  await getCryptos()
 
@@ -36,10 +40,16 @@ export const useCryptoStore = create<useCryptoStoreType>()(
             },
 
             fetchData : async ( pair ) => { 
+
+                set (() => ({
+                    loading : true
+                }))
+
                 const cryptoInfo = await fetchCurrentCryptoPrice( pair )
 
                 set (() => ({
-                    result :  cryptoInfo 
+                    result :  cryptoInfo ,
+                    loading : false
                 }))
                 
             }
