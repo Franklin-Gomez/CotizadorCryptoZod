@@ -7,6 +7,7 @@ import Alert from "./Alert"
 export default function Formulario() {
 
     const cryptos = useCryptoStore( store => store.cryptocurrenciesState)
+    const fetchData = useCryptoStore( store => store.fetchData)
 
     const [ pair , setPair ] = useState<pair> ({
         currency : '',
@@ -31,6 +32,7 @@ export default function Formulario() {
         }
 
         setError('')
+        fetchData( pair )
     }
 
     return (
