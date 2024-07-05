@@ -18,7 +18,7 @@ export default function Formulario() {
         fetchCoinList()
     },[])
 
-    console.log( coinlist )
+    
 
     const handleChange = ( e : React.ChangeEvent<HTMLSelectElement>) => { 
         console.log( e.target.value )
@@ -48,7 +48,13 @@ export default function Formulario() {
 
                     <option value="">--Seleccione La Crypto Moneda --</option>
 
-                    
+                    { coinlist.map(( coin ) => (
+                        <option 
+                            value={coin.CoinInfo.Name}
+                            key={coin.CoinInfo.Name}
+
+                        >{ coin.CoinInfo.FullName}</option>
+                    ))}
 
                 </select>
             </div>
