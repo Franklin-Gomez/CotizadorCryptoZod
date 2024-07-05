@@ -1,24 +1,23 @@
 // state with zustand
-import axios from "axios"
 import { create } from "zustand"
+import { coinListType } from "./Types"
+import { coinlist } from "./Service/CryptoService"
 
 type useCryptoStoreType =  { 
+    coinlist : coinListType[] ,
     fetchCoinList: () => void
+    
 }
 
-export const useCryptoStore = create<useCryptoStoreType>(()=> ({ 
+export const useCryptoStore = create<useCryptoStoreType>(( set )=> ({ 
 
+    coinlist : [],
 
-    fetchCoinList : async () => { 
-        const url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD'
+    fetchCoinList : async  () => { 
+        const cryptos =  await coinlist()
 
-        try {
-            
-            const {data : { Data } } = await axios( url  )
-            console.log( Data )
-
-        } catch (error) {
-            console.log(error)
-        }
+        set(() => ({
+            coinlist :  cryptos
+        }))
     }
 }))
