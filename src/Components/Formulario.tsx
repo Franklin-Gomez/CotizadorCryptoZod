@@ -1,5 +1,9 @@
+import { currencies } from "../Db/datos"
 
 export default function Formulario() {
+
+    
+
     return (
         <form className="formulario" >
             <div className="field">
@@ -7,6 +11,13 @@ export default function Formulario() {
                 <select name="Currency" id="Currency">
 
                     <option value="">-- Seleccione La Moneda--</option>
+
+                    { currencies.map ((currency) => (
+                        <option 
+                            value={currency.code}
+                            key={currency.code}
+                        >{currency.name}</option>
+                    ))}
 
                 </select>
             </div>
