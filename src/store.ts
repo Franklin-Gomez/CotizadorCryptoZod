@@ -2,7 +2,6 @@ import { create } from 'zustand'
 import { crypto, CryptoPrice, pair } from './Types';
 import { devtools } from 'zustand/middleware';
 import { getCryptos , fetchCurrentCryptoPrice } from './Service/CryptoService';
-import Spinner from './Components/Spinner';
 
 type useCryptoStoreType =  { 
     cryptocurrenciesState : crypto[]
