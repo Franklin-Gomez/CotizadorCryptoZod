@@ -15,8 +15,64 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;
+  font-size: 2rem;
 }
 
-h1 { 
+.container { 
+  max-width: 95%;
+  width: 35%;
+  margin: auto;
+}
+
+.app-title { 
+  font-size: 5rem;
+  margin: 3rem 0;
+  color: var(--white);
+}
+
+.app-title span { 
+  color: var(--primary);
+  display: block;
+}
+
+.app-content { 
+  background-color: #FFF;
+  padding: 2rem;
+  border-radius: 0.5rem;  
+}
+
+.formulario , .field{ 
+  display: grid;
+  gap: 1rem;
+}
+
+.formulario label { 
   font-size: 3rem;
+  color: var(--black);
+}
+
+.formulario select { 
+  font-size: 2rem;
+  border-radius: .5rem;
+  border: none;
+  background-color: rgb(224, 224, 224);
+  padding: .5rem;
+  color: gray;
+  margin-bottom: 2rem;
+}
+
+.formulario [type='submit']{ 
+  background-color: var(--primary);
+  padding : 1rem 0 ;
+  border-radius: .5rem;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: 700;
+
+  &:hover { 
+    background-color: #6cbda0;
+  }
+
 }
