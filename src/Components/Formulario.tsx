@@ -1,14 +1,29 @@
+import { useEffect, useState } from "react"
 import { currencies } from "../Db/datos"
+import { useCryptoStore } from "../store"
 
 export default function Formulario() {
 
-    
+    const fetchCoinList = useCryptoStore( (state) => state.fetchCoinList)
+
+    const [ coin , setCoin  ] = useState({ 
+        Currency : '',
+        CryptoCurrency : ''
+    })
+
+    useEffect( () => {
+        fetchCoinList()
+    },[])
+
+    const handleChange = ( e : React.ChangeEvent<HTMLSelectElement>) => { 
+        console.log( e.target.value )
+    }
 
     return (
         <form className="formulario" >
             <div className="field">
                 <label htmlFor="Currency"> Moneda : </label>
-                <select name="Currency" id="Currency">
+                <select name="Currency" id="Currency" onChange={ handleChange }>
 
                     <option value="">-- Seleccione La Moneda--</option>
 
