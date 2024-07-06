@@ -14,3 +14,8 @@ export const coinListSchema = z.object({
 
 export const coinListsSchema = z.array( coinListSchema )
 
+export const coinSchema = z.object({
+    Currency : z.string(),
+    CryptoCurrency : z.string()
+})
+

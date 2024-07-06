@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react"
 import { currencies } from "../Db/datos"
 import { useCryptoStore } from "../store"
+import { coinType } from "../Types"
+import Alert from "./Alert"
+
 
 
 export default function Formulario() {
 
 
     const fetchCoinList = useCryptoStore( (state) => state.fetchCoinList)
+    const fetchData = useCryptoStore( (state) => state.fetchData)
     const coinlist = useCryptoStore( (state) => state.coinlist)
+
+    const [ error , setError ] = useState(false)  
     
-    const [ coin , setCoin  ] = useState({ 
+    const [ coin , setCoin  ] = useState<coinType>({ 
         Currency : '',
         CryptoCurrency : ''
     })
@@ -20,12 +26,31 @@ export default function Formulario() {
 
     
 
-    const handleChange = ( e : React.ChangeEvent<HTMLSelectElement>) => { 
-        console.log( e.target.value )
+    const handleChange = ( e : React.ChangeEvent<HTMLSelectElement> ) => { 
+        setCoin({
+            ...coin,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    const handleSubmit = ( e : React.FormEvent<HTMLFormElement> ) => { 
+        e.preventDefault();
+
+        if( Object.values( coin ).includes('') ) { 
+            setError( true )
+            return;
+        }
+
+        setError(false)
+        fetchData( coin )
+
     }
 
     return (
-        <form className="formulario" >
+        <form className="formulario" onSubmit={ handleSubmit } >
+
+            { error && <Alert>llena esa monda</Alert>}
+
             <div className="field">
                 <label htmlFor="Currency"> Moneda : </label>
                 <select name="Currency" id="Currency" onChange={ handleChange }>
@@ -44,7 +69,7 @@ export default function Formulario() {
 
             <div className="field">
                 <label htmlFor="CryptoCurrency"> Criptomoneda : </label>
-                <select name="CryptoCurrency" id="CryptoCurrency"> 
+                <select name="CryptoCurrency" id="CryptoCurrency" onChange={ handleChange }> 
 
                     <option value="">--Seleccione La Crypto Moneda --</option>
 
