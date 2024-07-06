@@ -1,3 +1,4 @@
+import CryptoPricesDisplay from "./Components/CryptoPricesDisplay"
 import Formulario from "./Components/Formulario"
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
 
         <div className="app-content">
           <Formulario/>
+          <CryptoPricesDisplay/>
         </div>
         
       </div>

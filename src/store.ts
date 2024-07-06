@@ -1,11 +1,12 @@
 // state with zustand
 import { create } from "zustand"
-import { coinListType, coinType } from "./Types"
+import { coinListType, coinType, priceType } from "./Types"
 import { coinlist , fetchCurrentCryptoPrice } from "./Service/CryptoService"
 
 
 type useCryptoStoreType =  { 
-    coinlist : coinListType[] ,
+    coinlist : coinListType[]
+    coinPrice : priceType
     fetchCoinList: () => void
     fetchData:  ( CryptoInfo : coinType ) => Promise<void>
     
@@ -14,6 +15,16 @@ type useCryptoStoreType =  {
 export const useCryptoStore = create<useCryptoStoreType>(( set )=> ({ 
 
     coinlist : [],
+
+    coinPrice : { 
+        IMAGEURL: '',
+        PRICE: '',
+        LASTUPDATE: '',
+        HIGH24HOUR: '',
+        LOW24HOUR: '',
+        MKTCAP: '',
+        CHANGEPCT24HOUR: ''
+    } ,
 
     fetchCoinList : async  () => { 
         const cryptos =  await coinlist()
@@ -26,6 +37,8 @@ export const useCryptoStore = create<useCryptoStoreType>(( set )=> ({
     fetchData  : async ( CryptoInfo ) => { 
         const pricesCrypto = await fetchCurrentCryptoPrice( {CryptoInfo} )
 
-        console.log( pricesCrypto )
+        set(() => ({ 
+            coinPrice : pricesCrypto
+        }))
     }
 }))
