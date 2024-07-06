@@ -1,8 +1,7 @@
-import { useCryptoStore } from "../store"
 
-export default function CryptoPricesDisplay() {
+import { priceType } from "../Types"
 
-    const coinPrice = useCryptoStore( (state) => state.coinPrice)
+export default function CryptoPricesDisplay( {coinPrice} : {coinPrice : priceType} ) {
 
     return (
         
@@ -13,6 +12,8 @@ export default function CryptoPricesDisplay() {
             />
 
             <div>
+                <h1>Cotizacion</h1>
+
                 <p>Precio: <span> {coinPrice.PRICE} </span></p>
                 <p>Valor Max en 24h : <span> {coinPrice.HIGH24HOUR} </span></p>
                 <p>Valor Min en 24h : <span> {coinPrice.LOW24HOUR} </span></p>

@@ -2,43 +2,55 @@
 import { create } from "zustand"
 import { coinListType, coinType, priceType } from "./Types"
 import { coinlist , fetchCurrentCryptoPrice } from "./Service/CryptoService"
+import { devtools } from "zustand/middleware"
 
 
 type useCryptoStoreType =  { 
     coinlist : coinListType[]
     coinPrice : priceType
+    loading : boolean
     fetchCoinList: () => void
     fetchData:  ( CryptoInfo : coinType ) => Promise<void>
-    
 }
 
-export const useCryptoStore = create<useCryptoStoreType>(( set )=> ({ 
+export const useCryptoStore = create<useCryptoStoreType>()(
+    devtools(
+        
+        ( set ) => ({ 
 
-    coinlist : [],
+        coinlist : [],
 
-    coinPrice : { 
-        IMAGEURL: '',
-        PRICE: '',
-        LASTUPDATE: '',
-        HIGH24HOUR: '',
-        LOW24HOUR: '',
-        MKTCAP: '',
-        CHANGEPCT24HOUR: ''
-    } ,
+        coinPrice : { 
+            IMAGEURL: '',
+            PRICE: '',
+            LASTUPDATE: '',
+            HIGH24HOUR: '',
+            LOW24HOUR: '',
+            MKTCAP: '',
+            CHANGEPCT24HOUR: ''
+        } ,
 
-    fetchCoinList : async  () => { 
-        const cryptos =  await coinlist()
+        loading : false,
 
-        set(() => ({
-            coinlist :  cryptos
-        }))
-    },
+        fetchCoinList : async  () => { 
+            const cryptos =  await coinlist()
 
-    fetchData  : async ( CryptoInfo ) => { 
-        const pricesCrypto = await fetchCurrentCryptoPrice( {CryptoInfo} )
+            set(() => ({
+                coinlist :  cryptos
+            }))
+        },
 
-        set(() => ({ 
-            coinPrice : pricesCrypto
-        }))
-    }
-}))
+        fetchData  : async ( CryptoInfo ) => { 
+            set(() => ({ 
+                loading : true
+            }))
+
+            const pricesCrypto = await fetchCurrentCryptoPrice( {CryptoInfo} )
+
+            set(() => ({ 
+                coinPrice : pricesCrypto,
+                loading : false
+            }))
+        }
+    } // cierre del set
+)))
