@@ -1,4 +1,4 @@
-import { coinListsSchema } from "../Schema/Schemas"
+import { coinListsSchema, coinPriceSchema } from "../Schema/Schemas"
 import axios from "axios"
 import { coinType } from "../Types"
 
@@ -21,17 +21,18 @@ export const coinlist =  async () => {
 } 
 
 
-export const fetchCurrentCryptoPrice  = async ( { CryptoInfo } : {CryptoInfo : coinType } ) => { 
-
-    console.log( CryptoInfo )
+export const fetchCurrentCryptoPrice  = async ( { CryptoInfo } : { CryptoInfo : coinType } ) => { 
     
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${CryptoInfo.CryptoCurrency}&tsyms=${CryptoInfo.Currency}`
 
     try {
         
-        const data = await axios ( url )
-        console.log( data )
+        const {data : { DISPLAY }} = await axios ( url )
+        const resultado = coinPriceSchema.safeParse( DISPLAY[CryptoInfo.CryptoCurrency][CryptoInfo.Currency] )
 
+        if( resultado.success) { 
+            return resultado.data
+        }
 
     } catch (error) {
         console.log( error )

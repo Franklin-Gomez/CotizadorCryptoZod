@@ -19,3 +19,12 @@ export const coinSchema = z.object({
     CryptoCurrency : z.string()
 })
 
+export const coinPriceSchema = z.object({
+    IMAGEURL : z.string(),
+    PRICE : z.string(),
+    LASTUPDATE : z.string(),
+    HIGH24HOUR : z.string(),
+    LOW24HOUR : z.string(),
+    MKTCAP : z.string(),
+    CHANGEPCT24HOUR  : z.string()
+})
